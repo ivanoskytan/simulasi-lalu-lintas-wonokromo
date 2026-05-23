@@ -1,37 +1,48 @@
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.websockets import WebSocket
-
-from fastapi.templating import Jinja2Templates
-from fastapi.requests import Request    
-
-import asyncio
-
+from flask import Flask, render_template
+from flask_socketio import SocketIO, emit
 from model import TrafficModel
 
-app = FastAPI()
+app = Flask(__name__, template_folder="templates")
+app.config["SECRET_KEY"] = 'secret_wonokromo_key'
+socketio = SocketIO(app, cors_allowed_origins="*")
 
-model = TrafficModel()
+traffic_model = TrafficModel()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+@app.route("/")
+def index():
+    return render_template("index.html")
 
-templates = Jinja2Templates(directory="templates")
+@socketio.on("request_step")
+def handle_step(data):
+    if data:
+        traffic_model.volume_val = int(data.get("volume", traffic_model.volume_val))
+        traffic_model.train_val = int(data.get("train", traffic_model.train_val))
+        traffic_model.light_val = int(data.get("light", traffic_model.light_val))
+        traffic_model.angkot_val = int(data.get("angkot", traffic_model.angkot_val))
 
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    return templates.TemplateResponse(
-        "index.html",
-        {"request": request}
-    )
+    traffic_model.step()
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
+    agent_data = []
+    for a in traffic_model.agents:
+        target_node = a.route[a.t_idx] if a.t_idx < len(a.route) else None
+        agent_data.append({
+            "id": a.unique_id,
+            "x": a.x,
+            "y": a.y,
+            "is_angkot": a.is_angkot,
+            "is_parking": a.is_parking,
+            "target_node": target_node,
+            "tx": target_node["x"],
+            "ty": target_node["y"],
+        })
 
-    while True:
-        model.step()
+    emit("simulation_response", {
+        "vehicles": agent_data,
+        "tl_state": traffic_model.tl_state,
+        "gate_closed": traffic_model.gate_closed,
+        "train_state": traffic_model.train_state,
+        "train_progress": traffic_model.train_progress
+    })
 
-        await websocket.send_json(model.get_state())
-
-        await asyncio.sleep(0.1)    
+if __name__ == "__main__":
+    socketio.run(app, port=5000, debug=True)

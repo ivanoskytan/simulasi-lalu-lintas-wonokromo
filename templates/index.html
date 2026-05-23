@@ -1,27 +1,67 @@
 <!DOCTYPE html>
-<html>
-<head>
-
-    <meta charset="UTF-8">
-
-    <title>Wonokromo Mesa Simulation</title>
-
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simulasi Wonokromo Inteligent Traffic System</title>
+    <link rel="stylesheet" href="static/style.css" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js"></script>
+  </head>
+  <body>
+    <div id="sidebar">
+      <h2>Control Dashboard</h2>
 
-    <script src="/static/sketch.js"></script>
+      <div class="control-group">
+        <label>Volume Kendaraan <span id="valVolume" class="val-display">Sedang</span></label>
+        <input type="range" id="sliderVolume" min="1" max="15" value="6" />
+      </div>
 
-    <style>
+      <div class="control-group">
+        <label>Jeda Kereta Api <span id="valKereta" class="val-display">Normal</span></label>
+        <input type="range" id="sliderKereta" min="200" max="1500" value="800" />
+      </div>
 
-        body{
-            margin:0;
-            background:#111;
-            overflow:hidden;
-        }
+      <div class="control-group">
+        <label>Durasi Lampu Hijau <span id="valLampu" class="val-display">150 tick</span></label>
+        <input type="range" id="sliderLampu" min="50" max="400" step="10" value="150" />
+      </div>
 
-    </style>
+      <div class="control-group">
+        <label>Probabilitas Ngetem <span id="valAngkot" class="val-display">15%</span></label>
+        <input type="range" id="sliderAngkot" min="0" max="50" step="5" value="15" />
+      </div>
 
-</head>
+      <div class="legend">
+        <span class="legend-title">Sistem Navigasi Agen</span>
+        <div class="legend-item">
+          <div class="color-box" style="background: #38bdf8; box-shadow: 0 0 6px #38bdf8;"></div>
+          Mobil Pribadi
+        </div>
+        <div class="legend-item">
+          <div class="color-box" style="background: #fbbf24; box-shadow: 0 0 6px #fbbf24;"></div>
+          Angkot (Operasional)
+        </div>
+        <div class="legend-item">
+          <div class="color-box" style="background: #f97316; box-shadow: 0 0 6px #f97316;"></div>
+          Angkot (Ngetem)
+        </div>
+        <div class="legend-item">
+          <div class="color-box" style="background: #ef4444; box-shadow: 0 0 6px #ef4444;"></div>
+          Kereta Api Ekspres
+        </div>
+        <div class="sub-info">
+          <b>Lingkaran 1-5</b>: Traffic Light Sensor<br />
+          <b>Kotak A & B</b>: Palang Pintu Perlintasan Sebidang
+        </div>
+      </div>
+    </div>
 
-<body>
-</body>
+    <div id="canvas-container"></div>
+
+    <script src="static/sketch.js"></script>
+  </body>
 </html>
