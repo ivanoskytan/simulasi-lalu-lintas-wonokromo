@@ -1,0 +1,130 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    display: flex;
+    background: #1a1a1a;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  #sidebar {
+    width: 340px;
+    padding: 20px;
+    background: #2a2a2a;
+    height: 100vh;
+    box-sizing: border-box;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    overflow-y: auto;
+  }
+  
+  #canvas-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #222;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    margin-top: 0;
+  }
+  
+  .control-group {
+    margin-bottom: 20px;
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .highlight-box {
+    border: 2px solid #3b82f6;
+  }
+  
+  .help-text {
+    font-size: 0.75rem;
+    color: #aaa;
+    margin-top: 5px;
+  }
+  
+  label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .val-display {
+    color: #4ade80;
+    float: right;
+  }
+  
+  /* Custom Toggle Switch Component */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    float: right;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #f43f5e;
+    transition: 0.4s;
+    border-radius: 24px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #3b82f6;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+  
+  /* Legend Area */
+  .legend {
+    font-size: 0.85rem;
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }

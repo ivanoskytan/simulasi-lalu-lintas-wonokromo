@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulasi Perempatan & Perlintasan Kereta (LHT)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="sidebar">
+      <h2>Kontrol Simulasi</h2>
+
+      <div class="control-group">
+        <label>Durasi Lampu Hijau <span id="valTimer" class="val-display">20 Detik</span></label>
+        <input type="range" id="slTimer" min="5" max="40" value="20" step="1" />
+        <div class="help-text">Hanya 1 arah yang hijau bergantian (4-Fase).</div>
+      </div>
+
+      <div class="control-group">
+        <label>Volume Kendaraan <span id="valVol" class="val-display">Sedang</span></label>
+        <input type="range" id="slVol" min="1" max="15" value="6" />
+      </div>
+
+      <div class="control-group">
+        <label>Jeda Kereta Api <span id="valKereta" class="val-display">20 Detik</span></label>
+        <input type="range" id="slKereta" min="10" max="120" value="20" step="1" />
+        <div class="help-text">Waktu tunggu antar kereta.</div>
+      </div>
+
+      <div class="control-group">
+        <label>Waktu Reaksi Pengemudi <span id="valReact" class="val-display">2.1 Detik</span></label>
+        <input type="range" id="slReact" min="0" max="5" value="2.1" step="0.1" />
+      </div>
+
+      <div class="control-group highlight-box">
+        <label style="display: inline-block">Aktifkan Jembatan Layang</label>
+        <label class="switch">
+          <input type="checkbox" id="chkBridge" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="legend">
+        <b>Sistem Lalu Lintas:</b><br /><br />
+        <div class="legend-item" style="color: #60a5fa">Kiri Jalan (Standar Indonesia)</div>
+        <div class="legend-item" style="color: #eab308">Belok Kiri = Tajam / Langsung</div>
+        <div class="legend-item" style="color: #ef4444">Belok Kanan = Lebar / Menyilang</div>
+      </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <script src="vehicle.js"></script>
+    <script src="sketch.js"></script>
+  </body>
+</html>

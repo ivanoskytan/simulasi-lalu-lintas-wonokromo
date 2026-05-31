@@ -1,4 +1,0 @@
-mesa
-fastapi
-uvicorn
-jinja2
